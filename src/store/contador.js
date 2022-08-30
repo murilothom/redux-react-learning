@@ -7,10 +7,10 @@ const slice = createSlice({
   },
   reducers: {
     incrementar(state) {
-      state.total+=1
+      return { total: state.total + 1}
     },
     decrementar(state) {
-      state.total-=1
+      return { total: state.total - 1}
     },
   }
 })
