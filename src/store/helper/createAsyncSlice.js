@@ -44,7 +44,7 @@ const createAsyncSlice = (config) => {
       const { url, options } = config.fetchConfig(payload)
       const response = await fetch(url, options)
       const data = await response.json()
-
+      if(data.message) throw new Error('Usuário inválido')
       return dispatch(fetchSuccess(data))
     } catch (error) {
       return dispatch(fetchError(error.message))
