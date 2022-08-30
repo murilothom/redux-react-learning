@@ -1,35 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { autoLogin, login } from "./store/login";
-import { somar } from "./store/contador";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { autoLogin } from "./store/login";
 
-export function App() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+import './App.css'
+
+import { Header } from "./components/Header";
+import { Content } from "./components/Content";
+
+export const App = () => {
   const dispatch = useDispatch()
-
-  const { data } = useSelector(state => state.login.user)
-
-  function handleSubmit(event) {
-    event.preventDefault()
-    dispatch(login({username, password}))
-  }
 
   useEffect(() => {
     dispatch(autoLogin())
   }, [dispatch])
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label style={{display: 'block'}} htmlFor="username">Username</label>
-        <input id="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <label style={{display: 'block'}} htmlFor="password">Password</label>
-        <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button style={{display: 'block', marginTop: '8px'}}>Enviar</button>
-      </form>
-      <p>{data?.username}</p>
-      <button onClick={() => dispatch(somar(5))}>Somar</button>
+    <div className="container">
+      <Header />
+      <Content />
     </div>
   );
 }
