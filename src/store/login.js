@@ -31,7 +31,14 @@ const token = createAsyncSlice({
         }
       },
     },
+    removeToken(state) {
+      return {
+        ...state,
+        data: null
+      }
+    },
   },
+
   fetchConfig(user) {
     return { 
       url: 'https://apidogs.murilothom.com/json/jwt-auth/v1/token',
@@ -48,6 +55,14 @@ const token = createAsyncSlice({
 
 const user = createAsyncSlice({
   name: 'user',
+  reducers: {
+    removeUser(state) {
+      return {
+        ...state,
+        data: null
+      }
+    },
+  },
   fetchConfig(token) {
     return { 
       url: 'https://apidogs.murilothom.com/json/api/user',
@@ -55,16 +70,20 @@ const user = createAsyncSlice({
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token
-        }
-      }
+        },
+      },
     }
-  } 
+  },
 })
 
 const reducer = combineReducers({token: token.reducer, user: user.reducer})
 
 const fetchToken = token.asyncAction
 const fetchUser = user.asyncAction
+
+const { removeToken } = token.actions
+const { removeUser } = user.actions
+
 export default reducer
 
 export const login = (user) => async (dispatch) => {
@@ -80,4 +99,10 @@ export const autoLogin = () => async (dispatch, getState) => {
   const state = getState()
   const { token } = state.login.token.data
   token && await dispatch(fetchUser(token))
+}
+
+export const userLogout = () => (dispatch) => {
+  dispatch(removeUser())
+  dispatch(removeToken())
+  window.localStorage.removeItem('token')
 }
