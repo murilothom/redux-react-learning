@@ -15,7 +15,7 @@ export const Login = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form  className='anime' onSubmit={handleSubmit}>
     <label className={styles.label} htmlFor="username">Username</label>
     <input className={styles.input} id="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
     <label className={styles.label} style={{display: 'block'}} htmlFor="password">Password</label>
